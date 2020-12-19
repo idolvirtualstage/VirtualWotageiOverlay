@@ -1,0 +1,40 @@
+.container{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.container video {  
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: none;
+  mix-blend-mode: hue;
+}
+
+.container img {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  object-fit: none;
+  mix-blend-mode: hue;
+}
+
+.name {
+  position: absolute;
+}
+
+p {
+  text-align: center;
+  text-shadow:
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+  color: #8EC6DD;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 30px;
+}
