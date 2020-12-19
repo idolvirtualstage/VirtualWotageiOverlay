@@ -1,0 +1,417 @@
+let alertDuration = {alertDuration};
+  alertCoolDown = {alertCooldown};
+  stopCommand = "!stopalert";
+  aVolume = {alertVolume} * .01;
+  audio = null;
+  var onCoolDown =[];
+  showNames = {showNames} != 0;
+
+alertCommands ={
+  "!fuwa": {
+    "image": ["https://cdn.streamelements.com/uploads/9e86c307-35dc-4dce-b531-ec973562e3ce.gif",
+              "https://cdn.streamelements.com/uploads/b089ddf3-1912-491a-8726-c8717c858e9c.gif",
+              "https://cdn.streamelements.com/uploads/6a1c5299-81bc-443f-943f-f015e55a63cd.gif",
+              "https://cdn.streamelements.com/uploads/55aa2735-e600-4dad-acd3-4d433044cae8.gif",
+              "https://cdn.streamelements.com/uploads/2239c043-f5db-46d8-96f1-345dc17a1a87.gif",
+              "https://cdn.streamelements.com/uploads/f3922f7f-4534-44d9-b65b-b4d5c5987fa0.gif",
+              "https://cdn.streamelements.com/uploads/71750ba1-555b-46ad-a917-60d7216dce6a.gif",
+              "https://cdn.streamelements.com/uploads/093fbcf2-fd78-4646-99e9-40570e09d629.gif"
+              ],
+    "length": 2200
+  },
+  "!fuwateal": {
+    "image": "https://cdn.streamelements.com/uploads/9e86c307-35dc-4dce-b531-ec973562e3ce.gif",
+    "length": 2200
+  },
+  "!fuwapink": {
+    "image": "https://cdn.streamelements.com/uploads/b089ddf3-1912-491a-8726-c8717c858e9c.gif",
+    "length": 2200
+  },
+  "!fuwared": {
+    "image": "https://cdn.streamelements.com/uploads/6a1c5299-81bc-443f-943f-f015e55a63cd.gif",
+    "length": 2200
+  },
+  "!fuwauo": {
+    "image": "https://cdn.streamelements.com/uploads/f6467496-758d-47d5-935a-b795065582e5.gif",
+    "length": 2200
+  },
+  "!fuwaorange": {
+    "image": "https://cdn.streamelements.com/uploads/f6467496-758d-47d5-935a-b795065582e5.gif",
+    "length": 2200
+  },
+  "!fuwagreen": {
+    "image": "https://cdn.streamelements.com/uploads/55aa2735-e600-4dad-acd3-4d433044cae8.gif",
+    "length": 2200
+  },
+  "!fuwablue": {
+    "image": "https://cdn.streamelements.com/uploads/2239c043-f5db-46d8-96f1-345dc17a1a87.gif",
+    "length": 2200
+  },
+  "!fuwayellow": {
+    "image": "https://cdn.streamelements.com/uploads/f3922f7f-4534-44d9-b65b-b4d5c5987fa0.gif",
+    "length": 2200
+  },
+  "!fuwapurple": {
+    "image": "https://cdn.streamelements.com/uploads/71750ba1-555b-46ad-a917-60d7216dce6a.gif",
+    "length": 2200
+  },
+  "!fuwawhite": {
+    "image": "https://cdn.streamelements.com/uploads/093fbcf2-fd78-4646-99e9-40570e09d629.gif",
+    "length": 2200
+  },
+  "!hai": {
+    "image": ["https://cdn.streamelements.com/uploads/ac69498a-8bb6-4c20-9892-1329f632f017.gif",
+              "https://cdn.streamelements.com/uploads/755c472c-982c-494a-b314-50bedeedfed2.gif",
+              "https://cdn.streamelements.com/uploads/af5c3210-1c12-44bb-b59c-3725331dfc4e.gif",
+              "https://cdn.streamelements.com/uploads/2c743f1f-9fe5-401f-931c-2e4c6115af0c.gif",
+              "https://cdn.streamelements.com/uploads/4b54b1fb-71fa-4f52-b0d6-fbe8a015a620.gif",
+              "https://cdn.streamelements.com/uploads/f5709e2a-9567-47fa-ac7c-b0abfeea4577.gif",
+              "https://cdn.streamelements.com/uploads/709c72cc-1b6b-45c7-be4b-a62d4f2b35a7.gif",
+              "https://cdn.streamelements.com/uploads/2615f108-7dfa-4dfd-addc-5d1a6bdff00c.gif"
+              ],
+    "length": 2200
+  },
+  "!haipink": {
+    "image": "https://cdn.streamelements.com/uploads/ac69498a-8bb6-4c20-9892-1329f632f017.gif",
+    "length": 2200
+  },
+  "!haiyellow": {
+    "image": "https://cdn.streamelements.com/uploads/755c472c-982c-494a-b314-50bedeedfed2.gif",
+    "length": 2200
+  },
+  "!haired": {
+    "image": "https://cdn.streamelements.com/uploads/af5c3210-1c12-44bb-b59c-3725331dfc4e.gif",
+    "length": 2200
+  },
+  "!haiuo": {
+    "image": "https://cdn.streamelements.com/uploads/a3b57464-01c1-4242-a28d-4c1224fb2f4e.gif",
+    "length": 2200
+  },
+  "!haiorange": {
+    "image": "https://cdn.streamelements.com/uploads/a3b57464-01c1-4242-a28d-4c1224fb2f4e.gif",
+    "length": 2200
+  },
+  "!haiblue": {
+    "image": "https://cdn.streamelements.com/uploads/2c743f1f-9fe5-401f-931c-2e4c6115af0c.gif",
+    "length": 2200
+  },
+  "!haiteal": {
+    "image": "https://cdn.streamelements.com/uploads/4b54b1fb-71fa-4f52-b0d6-fbe8a015a620.gif",
+    "length": 2200
+  },
+  "!haipurple": {
+    "image": "https://cdn.streamelements.com/uploads/f5709e2a-9567-47fa-ac7c-b0abfeea4577.gif",
+    "length": 2200
+  },
+  "!haigreen": {
+    "image": "https://cdn.streamelements.com/uploads/709c72cc-1b6b-45c7-be4b-a62d4f2b35a7.gif",
+    "length": 2200
+  },
+  "!haiwhite": {
+    "image": "https://cdn.streamelements.com/uploads/2615f108-7dfa-4dfd-addc-5d1a6bdff00c.gif",
+    "length": 2200
+  },
+  "!kecha": {
+    "image": ["https://cdn.streamelements.com/uploads/20d764e5-9835-4ec0-8d32-62c693ba48e0.gif",
+              "https://cdn.streamelements.com/uploads/29eb1692-4d5a-47ec-89ea-02fff9c086d1.gif",
+              "https://cdn.streamelements.com/uploads/c23f1877-60f4-4d63-9245-aa2103ecbcdf.gif",
+              "https://cdn.streamelements.com/uploads/296c9a34-9426-4195-ba78-e2c2ddf2f995.gif",
+              "https://cdn.streamelements.com/uploads/d7a2f796-c139-4dca-bdad-8cb7f8b2e343.gif",
+              "https://cdn.streamelements.com/uploads/e2824b1a-2de3-455d-83d4-ebdbc018f377.gif",
+              "https://cdn.streamelements.com/uploads/7179a4b1-a0c3-483a-81f2-93281a8718f2.gif",
+              "https://cdn.streamelements.com/uploads/e86631c4-fcce-46c4-9c3c-9b354728278f.gif"
+              ],
+    "length": 2500
+  },
+  "!kechateal": {
+    "image": "https://cdn.streamelements.com/uploads/20d764e5-9835-4ec0-8d32-62c693ba48e0.gif",
+    "length": 2500
+  },
+  "!kechapink": {
+    "image": "https://cdn.streamelements.com/uploads/29eb1692-4d5a-47ec-89ea-02fff9c086d1.gif",
+    "length": 2500
+  },
+  "!kechapurple": {
+    "image": "https://cdn.streamelements.com/uploads/c23f1877-60f4-4d63-9245-aa2103ecbcdf.gif",
+    "length": 2500
+  },
+  "!kechayellow": {
+    "image": "https://cdn.streamelements.com/uploads/296c9a34-9426-4195-ba78-e2c2ddf2f995.gif",
+    "length": 2500
+  },
+  "!kechagreen": {
+    "image": "https://cdn.streamelements.com/uploads/d7a2f796-c139-4dca-bdad-8cb7f8b2e343.gif",
+    "length": 2500
+  },
+  "!kechablue": {
+    "image": "https://cdn.streamelements.com/uploads/e2824b1a-2de3-455d-83d4-ebdbc018f377.gif",
+    "length": 2500
+  },
+  "!kechared": {
+    "image": "https://cdn.streamelements.com/uploads/7179a4b1-a0c3-483a-81f2-93281a8718f2.gif",
+    "length": 2500
+  },
+  "!kechauo": {
+    "image": "https://cdn.streamelements.com/uploads/18a1005e-1346-4014-8f7a-a21402683967.gif",
+    "length": 2500
+  },
+  "!kechaorange": {
+    "image": "https://cdn.streamelements.com/uploads/18a1005e-1346-4014-8f7a-a21402683967.gif",
+    "length": 2500
+  },
+  "!kechawhite": {
+    "image": "https://cdn.streamelements.com/uploads/e86631c4-fcce-46c4-9c3c-9b354728278f.gif",
+    "length": 2500
+  },
+  "!wipe": {
+    "image": ["https://cdn.streamelements.com/uploads/26bbe3ba-5324-4842-a2f2-3ff7f153b114.gif",
+              "https://cdn.streamelements.com/uploads/b49ed0a1-a66e-4911-9bb0-f23a8f500079.gif",
+              "https://cdn.streamelements.com/uploads/8a59b93e-39c9-460e-bf00-641181fc2ba3.gif",
+              "https://cdn.streamelements.com/uploads/fb5266ee-566b-48c5-a097-5508dda60297.gif",
+              "https://cdn.streamelements.com/uploads/6fcbf86f-619e-43b3-8573-b6535e7a1fa2.gif",
+              "https://cdn.streamelements.com/uploads/3d32720e-822d-47f8-9887-a7f8315e4b34.gif",
+              "https://cdn.streamelements.com/uploads/d292b282-89fc-4970-ad1f-75db3111b388.gif",
+              "https://cdn.streamelements.com/uploads/0bf31d14-145a-4508-a77f-71abef6bb7d2.gif"
+              ],
+    "length": 3200
+  },
+  "!wipeteal": {
+    "image": "https://cdn.streamelements.com/uploads/fb5266ee-566b-48c5-a097-5508dda60297.gif",
+    "length": 3200
+  },
+  "!wipepink": {
+    "image": "https://cdn.streamelements.com/uploads/d292b282-89fc-4970-ad1f-75db3111b388.gif",
+    "length": 3200
+  },
+  "!wipepurple": {
+    "image": "https://cdn.streamelements.com/uploads/b49ed0a1-a66e-4911-9bb0-f23a8f500079.gif",
+    "length": 3200
+  },
+  "!wipeyellow": {
+    "image": "https://cdn.streamelements.com/uploads/8a59b93e-39c9-460e-bf00-641181fc2ba3.gif",
+    "length": 3200
+  },
+  "!wipegreen": {
+    "image": "https://cdn.streamelements.com/uploads/3d32720e-822d-47f8-9887-a7f8315e4b34.gif",
+    "length": 3200
+  },
+  "!wipeblue": {
+    "image": "https://cdn.streamelements.com/uploads/6fcbf86f-619e-43b3-8573-b6535e7a1fa2.gif",
+    "length": 3200
+  },
+  "!wipered": {
+    "image": "https://cdn.streamelements.com/uploads/26bbe3ba-5324-4842-a2f2-3ff7f153b114.gif",
+    "length": 3200
+  },
+  "!wipeuo": {
+    "image": "https://cdn.streamelements.com/uploads/fd02cdea-4484-4a88-89db-5c06c5cc3389.gif",
+    "length": 3200
+  },
+  "!wipeuo": {
+    "image": "https://cdn.streamelements.com/uploads/fd02cdea-4484-4a88-89db-5c06c5cc3389.gif",
+    "length": 3200
+  },
+  "!wipewhite": {
+    "image": "https://cdn.streamelements.com/uploads/0bf31d14-145a-4508-a77f-71abef6bb7d2.gif",
+    "length": 3200
+  }
+};
+
+var videoNum = 0;
+var imgNum = 0;
+var changeColor = true;
+
+window.addEventListener('onEventReceived', function (obj) {
+   if (!obj.detail.event) {
+      return;
+    }
+   const event = obj.detail.event;
+ 
+  if (obj.detail.listener !== "message") return;
+
+  var command = event["data"]["text"].split(" ")[0].toLowerCase();
+  var data = obj.detail.event.data;
+  var senderName = event["data"]["displayName"].toLowerCase();
+
+  if(event["data"]["badges"].length > 0) //Twitch Functionality Only
+    var badge = event["data"]["badges"][0]["type"];
+
+  var isMod = (badge === 'moderator' || badge === 'broadcaster');
+  var isSub = (badge === 'subscriber'|| badge === 'broadcaster' || badge === 'moderator' );
+
+  if(command === stopCommand && isMod)
+  {
+    stopVideo();
+  }
+  if(command in alertCommands){       
+    if('sub' in alertCommands[command] && !isSub)
+      return;
+    if('mod' in alertCommands[command] && !isMod)
+      return;
+    if('user' in alertCommands[command] && !alertCommands[command]["user"].includes(senderName))
+      return;
+    if(!isMod && !isSub && onCoolDown.includes(senderName))
+       return;
+  
+    if("volume" in alertCommands[command])
+      aVolume = alertCommands[command]["volume"] * .01;
+    if("cooldown" in alertCommands[command])
+      alertCoolDown = alertCommands[command]["cooldown"];
+    if("length" in alertCommands[command])
+      alertDuration = alertCommands[command]["length"];
+    if("sound" in alertCommands[command]){
+
+      var playThis = alertCommands[command]["sound"];
+      if(Array.isArray(playThis))
+        playThis = playThis[Math.floor(Math.random() * playThis.length)];
+
+      if("delaysound" in alertCommands[command]){
+        setTimeout(function () {
+          playAudio(playThis, alertDuration);
+        }, alertCommands[command]['delaysound'] - alertCommands[command]['delaysound']);
+      }
+      else
+        playAudio(playThis, alertDuration);
+    }
+    if("image" in alertCommands[command]){
+      var showThis = alertCommands[command]["image"];
+      if(Array.isArray(showThis))
+        showThis = showThis[Math.floor(Math.random() * showThis.length)];
+
+      if('delayimage' in alertCommands[command]){
+        setTimeout(function () {
+          showImage(showThis,alertDuration - alertCommands[command]['delayimage'], senderName);
+        }, alertCommands[command]['delayimage']);
+      }    
+      else  
+        showImage(showThis,alertDuration, senderName);
+    }
+    if("video" in alertCommands[command]){
+
+      // choose video variation
+      var showThis = alertCommands[command]["video"];
+      if(Array.isArray(showThis))
+        showThis = showThis[Math.floor(Math.random() * showThis.length)];      
+
+      setTimeout(playVideo(showThis, senderName),0);
+      if("length" in alertCommands[command])
+        alertDuration = alertCommands[command]["length"];
+      if("sound" in alertCommands[command])
+        if("delaysound" in alertCommands[command]){
+          setTimeout(function () {
+            playAudio(alertCommands[command]["sound"], alertDuration - alertCommands[command]['delaysound'] );
+          }, alertCommands[command]['delaysound']);
+        }
+        else
+          playAudio(alertCommands[command]["sound"], alertDuration);
+    }
+    
+    onCoolDown.push(senderName);
+    setTimeout(function () {
+        onCoolDown.shift();
+		}, alertCoolDown);
+  }
+});
+
+
+function playAudio(sound, alertD){
+
+  audio = new Audio(sound);
+  audio.volume = aVolume;
+  audio.play();
+  setTimeout(function () {
+    audio.pause();
+  }, alertD);
+}
+
+function randomColor() {
+  return Math.floor(Math.random() * 255);
+}
+
+function setRandomPosition(element) {
+  var container = document.getElementById('container');
+  var width = 350;
+  var height = 250;
+  var y = container.clientHeight - height;
+  var x = container.clientWidth - width;
+  var randomX = Math.floor(Math.random()*x);
+  var randomY = Math.floor(Math.random()*y);
+  element.style.left = randomX + 'px';
+  element.style.top = randomY + 'px';
+}
+
+function printName(element, name) {
+  var nameDiv = document.createElement('div');
+  nameDiv.className = 'name';
+  document.getElementById('container').appendChild(nameDiv);
+  nameDiv.innerHTML = '<p>'+name+'</p>';
+  nameDiv.style.width = "350px";
+  nameDiv.style.top = (parseInt(element.style.top) + 150) + "px";
+  nameDiv.style.left = parseInt(element.style.left) + "px";
+  return nameDiv;
+}
+
+function showImage(imageSRC, alertD, senderName){  
+  var container = document.getElementById('container');
+  var newImg = document.createElement('img');
+  container.appendChild(newImg);
+  var id = 'newImg' + imgNum;
+  imgNum = (imgNum + 1) % 100;
+  newImg.id = id;
+  newImg.className = 'img';
+  newImg.setAttribute('src', imageSRC+"?a="+Math.random());
+  setRandomPosition(newImg);
+  
+  var name;
+  if(showNames) {
+  	name = printName(newImg, senderName);
+  }
+  
+  setTimeout(function () {
+    if(name) {
+    	name.parentNode.removeChild(name);
+    }
+    newImg.parentNode.removeChild(newImg);
+  }, alertD);
+}
+
+function stopVideo(){
+  var video = document.getElementById("vid");
+  var img = document.getElementById("img");
+  $("#img").fadeOut("slow");
+
+  $("#vid").fadeTo("slow",0);
+  $("#vid")[0].pause();
+  audio.pause();
+
+}
+
+function playVideo(videoSRC, senderName){
+  var container = document.getElementById('container');
+
+  var newVid = document.createElement('video');
+  var id = 'newVid' + videoNum;
+  videoNum = (videoNum + 1) % 100;
+  newVid.id = id;
+  newVid.className = 'video';
+  
+  container.appendChild(newVid);
+  newVid.setAttribute('src', videoSRC);
+  setRandomPosition(newVid);
+  
+  var name;
+  if(showNames) {
+     name = printName(newVid, senderName);
+  }
+
+  newVid.play();
+ 
+  $('#' + id).fadeTo("slow",1);
+  $('#' + id).on('ended', function () {
+    if(name) {
+      name.parentNode.removeChild(name);
+    }
+    newVid.parentNode.removeChild(newVid);
+  });
+  
+}
