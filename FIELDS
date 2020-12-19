@@ -1,0 +1,23 @@
+{   "alertVolume":{
+    "type": "number",
+    "label": "overal Volume for alerts",
+    "value": 50,
+    "min":0,
+    "max": 100
+  },
+    "alertCooldown":{
+    "type": "number",
+    "label": "cooldown for each alert",
+    "value": 30000
+  },
+ 	"showNames":{
+    "type": "number",
+    "label": "Show Names",
+    "value": 0
+  	},
+    "alertDuration":{
+    "type": "number",
+    "label": "How long are the gif duration",
+    "value": 3000
+  }
+}
